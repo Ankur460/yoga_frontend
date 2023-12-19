@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+Yoga Class App Documentation
+Overview
+The Yoga Class App is a comprehensive platform designed to facilitate user registration, login, enrollment in yoga classes, and seamless management of enrollment periods and batch selections. The app aims to streamline the user experience, ensuring smooth registration, enrollment, and renewal processes for yoga classes.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Features Implemented
 
-## Available Scripts
+*User Registration
+Users can register for the app, providing necessary details.
+Validation prevents duplicate user enrollments.
 
-In the project directory, you can run:
+*Login Page
+Upon successful registration, users are directed to the login page.
+Users input their credentials for authentication.
 
-### `npm start`
+*Plan Selection
+After login, users are navigated to the plan page.
+Users can select a batch for enrollment in yoga classes for the month.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+*Enrollment Process
+Users pay the enrollment fee and confirm their enrollment by clicking the "Enroll" button.
+Validation prevents re-enrollment within the same month after successful enrollment.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+*Subscription Management
+Upon plan expiration, users are prompted to reselect a batch, pay the fee, and re-enroll for the upcoming month.
 
-### `npm test`
+Technical Implementation
+Frontend
+Registration: Input fields for user details with duplicate validation.
+Login Page: Credentials input for authentication.
+Plan Page: Batch selection options, enrollment fee, and "Enroll" button.
+Subscription Renewal: Automatic redirection and prompts for re-enrollment after plan expiration.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Backend
+User Authentication: Validation and storage of user credentials.
+Enrollment Management: Tracking and validation of user enrollment for the month.
+Subscription Renewal: Automated processes for re-enrollment after plan expiration.
 
-### `npm run build`
+Future Enhancements
+Personalized Recommendations
+Implement AI-driven recommendations based on user preferences or previous class selections.
+Progress Tracking
+Integrate features to track user progress or provide performance insights.
+Social Integration
+Enable sharing of achievements or class schedules on social media platforms.
+Conclusion
+The Yoga Class App successfully implements a user-friendly interface for registration, login, enrollment, and subscription management in yoga classes. The validation features prevent duplicate enrollments and ensure a seamless user experience. Future enhancements aim to further personalize the user journey and provide additional functionalities for a more comprehensive yoga experience.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+********************************************************************************************************************
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+DataBase Schema Design
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Table "enrollments" {
+  "EnrollmentID" int(11) [pk, not null]
+  "UserID" int(11) [default: NULL]
+  "EnrollmentDate" date [default: `curdate()`]
+  "SelectedBatch" varchar(20) [not null]
+  "EnrollmentExpiration" date [default: `last_day(curdate())`]
+}
 
-### `npm run eject`
+Table "payments" {
+  "PaymentID" int(11) [not null]
+  "UserID" int(11) [default: NULL]
+  "PaymentDate" date [not null]
+  "AmountPaid" decimal(10,2) [not null]
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Table "users" {
+  "UserId" int(11) [pk, not null]
+  "Name" varchar(255) [not null]
+  "AGE" int(11) [not null]
+  "PASSWORD" varchar(15) [not null]
+  "email" varchar(30) [not null]
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Ref:"users"."UserId" < "payments"."UserID"
+Ref:"users"."UserId" < "enrollments"."UserID"
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+API Documentation-> https://documenter.getpostman.com/view/29596760/2s9Ykocgfd
