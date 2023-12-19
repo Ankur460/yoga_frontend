@@ -20,7 +20,7 @@ const navigate = useNavigate();
    removeToken('token');
    setToken('');
    navigate('/login');
-   
+   window.location.reload();
   }
 
 
